@@ -11,7 +11,7 @@ function Home() {
           try {
             const res = await fetch("https://restcountries.com/v3.1/all");
             const data = await res.json();
-            setCountriesdata(data.slice(0,12));
+            setCountriesdata(data.slice(25,49));
           } catch (error) {
             console.error(error);
           }
