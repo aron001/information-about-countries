@@ -49,7 +49,9 @@ function Home() {
               <AllCountrys key={country.name.common} {...country} />
             ))}
           </div>
+          
         </section>
+        
       )}
     </>
   );
