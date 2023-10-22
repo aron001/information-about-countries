@@ -3,7 +3,7 @@ import styles from "../styles";
 import { AiOutlineEye } from "react-icons/ai";
 import CountryDetailCard from "./CountryDetailCard";
 
-const AllCountrys = ({ flags, name, region }) => {
+const AllCountrys = ({ flags, name, region,subregion,languages,continents }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -30,6 +30,10 @@ const AllCountrys = ({ flags, name, region }) => {
           name={name}
           flags={flags}
           region={region}
+          subregion={subregion}
+          languages={languages}
+          continents={continents}
+
         />
       ) : null}
     </div>

@@ -1,6 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import AllCountrys from "./AllCountrys";
+import { AiOutlineSearch,  AiOutlineHeart,AiOutlineShoppingCart } from "react-icons/ai";
+
 function Home() {
   const [countriesdata, setCountriesdata] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -21,6 +23,21 @@ function Home() {
 
   return (
     <>
+
+<div className="w-[50%] relative align-middle mt-5 sticky top-0">
+          <input
+            type="text"
+            placeholder="Search Product..."
+            
+            className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
+          />
+          <AiOutlineSearch
+            size={30}
+            className="absolute right-2 top-1.5 cursor-pointer"
+          />
+          </div>
+
+
       {!countriesdata ? (
         <h1 className="text-gray-900 font-bold uppercase tracking-wide flex items-center justify-center text-center h-screen text-4xl dark:text-white">
           Loading...

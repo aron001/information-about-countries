@@ -1,7 +1,7 @@
 import React from "react";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../styles";
-function CountryDetailCard({ setOpen, flags, name, region }) {
+function CountryDetailCard({ setOpen, flags, name, region,subregion,languages,continents }) {
   return (
     /*<div>{name.common} 
     Region={region}
@@ -31,7 +31,11 @@ function CountryDetailCard({ setOpen, flags, name, region }) {
                 <h1 className={`${styles.productTitle} text-[20px]`}>
                   {name.common}
                 </h1>
-                <p>{region}</p>
+                <p>region :{region}</p>
+                <p>Sub Region :{subregion}</p>
+                <p>Languges :{languages[0]}</p>
+                <p>continents:{continents}</p>
+
               </div>
             </div>
           </div>
