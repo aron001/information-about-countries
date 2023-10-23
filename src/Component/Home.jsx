@@ -6,7 +6,8 @@ function Home() {
 
   const [countriesdata, setCountriesdata] = useState([]);
   const [searchText, setSearchText] = useState("");
-
+  const [error, setError] = useState(null);
+  const [searchResult, setSearchResult] = useState([]);
 
   const regions = [
     
@@ -65,10 +66,19 @@ function Home() {
         `https://restcountries.com/v3.1/name/${searchText}`
       );
       const data = await res.json();
-      setCountriesdata(data);
+      if (data.length>0) {
+        setSearchResult(data);   
+        setError(null);
+      } else {
+        setSearchResult([]);
+        setError('No search results found');
+      }
+         
+
     } catch (error) {
+      setSearchResult([]);
       console.error(error);
-    }
+      setError('Error: Name not found');    }
   }
 
    function handleFilterByRegion(e) {
@@ -80,6 +90,8 @@ function Home() {
     e.preventDefault();
     searchCountry();
   }
+
+  const countriesToDisplay = searchResult.length > 0 ? searchResult : countriesdata;
 
   return (
     <>
@@ -128,16 +140,23 @@ function Home() {
               </select>
             </form>
           </div>
-            {countriesdata && (
-          <>
+
+    
+        <>
         
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-            {countriesdata.map((country) => (
-              <AllCountrys key={country.name.common} {...country} />
-            ))}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">         
+
+            {error && <p>{error}</p>}
+      
+    
+
+      {countriesToDisplay.map((country) => (
+        <AllCountrys key={country.name.common} {...country} />
+      ))}
+
           </div>
+          
           </>
-          )}
           
         </section>
         
