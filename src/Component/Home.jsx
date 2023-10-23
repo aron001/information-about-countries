@@ -57,10 +57,30 @@ function Home() {
     }
   }
 
+
+
+   async function searchCountry() {
+    try {
+      const res = await fetch(
+        `https://restcountries.com/v3.1/name/${searchText}`
+      );
+      const data = await res.json();
+      setCountriesdata(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
    function handleFilterByRegion(e) {
     e.preventDefault();
     filterByRegion();
   }
+
+    function handleSearchCountry(e) {
+    e.preventDefault();
+    searchCountry();
+  }
+
   return (
     <>
 
@@ -75,6 +95,22 @@ function Home() {
         <section className="container mx-auto p-8">
  <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8">
            
+             <form
+              onSubmit={handleSearchCountry}
+              autoComplete="off"
+              className="max-w-4xl md:flex-1"
+            >
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="Search for a country by its name"
+                required
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                className="py-3 px-4 text-gray-600 placeholder-gray-600 w-full shadow rounded outline-none  transition-all duration-200"
+              />
+            </form>
 
             <form onSubmit={handleFilterByRegion}>
               <select
@@ -92,12 +128,16 @@ function Home() {
               </select>
             </form>
           </div>
-
+            {countriesdata && (
+          <>
+        
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {countriesdata.map((country) => (
               <AllCountrys key={country.name.common} {...country} />
             ))}
           </div>
+          </>
+          )}
           
         </section>
         
