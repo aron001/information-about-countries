@@ -1,11 +1,34 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import AllCountrys from "./AllCountrys";
-import { AiOutlineSearch,  AiOutlineHeart,AiOutlineShoppingCart } from "react-icons/ai";
 
 function Home() {
+
   const [countriesdata, setCountriesdata] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+
+  const regions = [
+    
+    {
+      name: "Europe",
+    },
+    {
+      name: "Asia",
+    },
+    {
+      name: "Africa",
+    },
+    {
+      name: "Oceania",
+    },
+    {
+      name: "Americas",
+    },
+    {
+      name: "Antarctic",
+    },
+  ];
 
   useEffect(() => {
     const getCountriesinfo = async () => {
@@ -21,21 +44,27 @@ function Home() {
     getCountriesinfo();
   }, []);
 
+
+    async function filterByRegion(region) {
+    try {
+      const res = await fetch(
+        `https://restcountries.com/v3.1/region/${region}`
+      );
+      const data = await res.json();
+      setCountriesdata(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+   function handleFilterByRegion(e) {
+    e.preventDefault();
+    filterByRegion();
+  }
   return (
     <>
 
-<div className="w-[50%] relative align-middle mt-5 sticky top-0">
-          <input
-            type="text"
-            placeholder="Search Product..."
-            
-            className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
-          />
-          <AiOutlineSearch
-            size={30}
-            className="absolute right-2 top-1.5 cursor-pointer"
-          />
-          </div>
+
 
 
       {!countriesdata ? (
@@ -44,6 +73,26 @@ function Home() {
         </h1>
       ) : (
         <section className="container mx-auto p-8">
+ <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8">
+           
+
+            <form onSubmit={handleFilterByRegion}>
+              <select
+                name="filter-by-region"
+                id="filter-by-region"
+                className="w-52 py-3 px-4 outline-none shadow rounded text-gray-600 "
+                value={regions.name}
+                onChange={(e) => filterByRegion(e.target.value)}
+              >
+                {regions.map((region, index) => (
+                  <option key={index} value={region.name}>
+                    {region.name}
+                  </option>
+                ))}
+              </select>
+            </form>
+          </div>
+
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {countriesdata.map((country) => (
               <AllCountrys key={country.name.common} {...country} />
