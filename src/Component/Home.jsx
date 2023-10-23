@@ -3,14 +3,13 @@ import { useState, useEffect } from "react";
 import AllCountrys from "./AllCountrys";
 
 function Home() {
-
   const [countriesdata, setCountriesdata] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [error, setError] = useState(null);
   const [searchResult, setSearchResult] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const regions = [
-    
     {
       name: "Europe",
     },
@@ -45,8 +44,7 @@ function Home() {
     getCountriesinfo();
   }, []);
 
-
-    async function filterByRegion(region) {
+  async function filterByRegion(region) {
     try {
       const res = await fetch(
         `https://restcountries.com/v3.1/region/${region}`
@@ -58,56 +56,49 @@ function Home() {
     }
   }
 
-
-
-   async function searchCountry() {
+  async function searchCountry() {
+    setSearchQuery(searchText);
     try {
       const res = await fetch(
         `https://restcountries.com/v3.1/name/${searchText}`
       );
       const data = await res.json();
-      if (data.length>0) {
-        setSearchResult(data);   
+      if (data.length > 0) {
+        setSearchResult(data);
         setError(null);
       } else {
         setSearchResult([]);
-        setError('No search results found');
+        setError("No search results found");
       }
-         
-
     } catch (error) {
       setSearchResult([]);
       console.error(error);
-      setError('Error: Name not found');    }
+      setError("Error: Name not found");
+    }
   }
 
-   function handleFilterByRegion(e) {
+  function handleFilterByRegion(e) {
     e.preventDefault();
     filterByRegion();
   }
 
-    function handleSearchCountry(e) {
+  function handleSearchCountry(e) {
     e.preventDefault();
     searchCountry();
   }
 
-  const countriesToDisplay = searchResult.length > 0 ? searchResult : countriesdata;
+  const countriesToDisplay = searchQuery ? searchResult : countriesdata;
 
   return (
     <>
-
-
-
-
       {!countriesdata ? (
         <h1 className="text-gray-900 font-bold uppercase tracking-wide flex items-center justify-center text-center h-screen text-4xl dark:text-white">
           Loading...
         </h1>
       ) : (
         <section className="container mx-auto p-8">
- <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8">
-           
-             <form
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8">
+            <form
               onSubmit={handleSearchCountry}
               autoComplete="off"
               className="max-w-4xl md:flex-1"
@@ -141,25 +132,28 @@ function Home() {
             </form>
           </div>
 
-    
-        <>
-        
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">         
+          <>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+              {error && (
+                <p className="justify-center mt-50 text-center text-3xl  text-red-600  ">
+                  {error}
+                  <div
+                    id="error-page"
+                    className="justify-center mt-50 text-center text-3xl text-red-600 "
+                  >
+                    <a href="/" className="text-blue-500 text-sm">
+                      Go back to homepage
+                    </a>
+                  </div>
+                </p>
+              )}
 
-            {error && <p>{error}</p>}
-      
-    
-
-      {countriesToDisplay.map((country) => (
-        <AllCountrys key={country.name.common} {...country} />
-      ))}
-
-          </div>
-          
+              {countriesToDisplay.map((country) => (
+                <AllCountrys key={country.name.common} {...country} />
+              ))}
+            </div>
           </>
-          
         </section>
-        
       )}
     </>
   );
