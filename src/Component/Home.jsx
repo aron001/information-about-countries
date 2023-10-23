@@ -8,7 +8,6 @@ function Home() {
   const [error, setError] = useState(null);
   const [searchResult, setSearchResult] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-
   const regions = [
     {
       name: "Europe",
@@ -35,7 +34,9 @@ function Home() {
       try {
         const res = await fetch("https://restcountries.com/v3.1/all");
         const data = await res.json();
+        
         setCountriesdata(data.slice(25, 49));
+   
       } catch (error) {
         console.error(error);
       }
@@ -96,6 +97,7 @@ function Home() {
           Loading...
         </h1>
       ) : (
+        
         <section className="container mx-auto p-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8">
             <form

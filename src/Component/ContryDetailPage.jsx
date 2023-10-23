@@ -44,12 +44,9 @@ function ContryDetailPage() {
                   <li>Population: {item.population.toLocaleString()}</li>
                   <li>Region: {item.region}</li>
                   <li>Subregion: {item.subregion}</li>
-                  <li>languages: {item.languages[0]}</li>
-                  <li>continents: {item.continents}</li>
-
-                  <li>languages = {item.languages[0]}</li>
-
-
+                  <p>Languages: {Object.values(item.languages).join(', ')}</p>                  <li>continents: {item.continents}</li>
+                  <p>Currencies: {Object.values(item.currencies).join(', ')}</p>
+                  <p>Independence Status: {item.independent}</p>
                 </ul>
   
                 {item.borders && (
