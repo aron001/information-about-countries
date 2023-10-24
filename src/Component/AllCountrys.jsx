@@ -23,7 +23,7 @@ const AllCountrys = ({ flags, name, region,subregion,languages,continents,capita
         <h2 className={`${styles.productTitle}`}> {name.common}</h2>
         <AiOutlineEye
           size={22}
-          className="cursor-pointer absolute ml-72 "
+          className="cursor-pointer absolute ml-72 sm:ml-40"
           onClick={() => setOpen(!open)}
           color="#333"
           title="Quick View"
