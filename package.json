@@ -1,5 +1,5 @@
 {
-  "homepage":"https://github.com/aron001/information-about-countries.git",
+  "homepage": "https://github.com/aron001/information-about-countries.git",
   "name": "front",
   "version": "0.1.0",
   "private": true,
@@ -40,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.0.0"
   }
 }
