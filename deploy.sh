@@ -1,31 +1,29 @@
-#!/usr/bin/env
+#!/bin/bash
 
-# checkout to the gh-pages, reset
-# and sync the branch with our main
-# change here to master if you need
-git checkout gh-pages
-git reset --hard origin/main
+# Run tests
+npm test
 
-# install dependencies and create
-# the react app build
-npm install
-npm run build
+# If tests pass, deploy the app
+if [ $? -eq 0 ]; then
+  # Build the React app
+  npm run build
 
-# delete everything on the directory
-# except the build folder
-find * -maxdepth 0 -name 'build' -prune -o -exec rm -rf '{}' ';'
+  # Move into the build directory
+  cd build
 
-# move the build folder content
-# to the repository root
-mv ./build/* .
+  # Initialize a new Git repository
+  git init
 
-# deletes the git cache and push
-# the new content to gh-pages
-git rm -rf --cache .
-git add .
-git commit -m "deploy"
+  # Add and commit all files
+  git add .
+  git commit -m "Deploy to GitHub Pages"
 
-git push origin gh-pages --force
+  # Set the remote repository URL
+  git remote add origin https://github.com/aron001/information-about-countries.git
+  # Push the build files to the gh-pages branch
+  git push origin HEAD:gh-pages --force
 
-# go back to main (or master)
-git checkout main
+  # Extract the deployment link
+  DEPLOYMENT_LINK="https://aron001.github.io/information-about-countries/"
+  echo "Deployment Link: $DEPLOYMENT_LINK"
+fi

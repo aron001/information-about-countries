@@ -22,4 +22,4 @@ jobs:
         run: npm install
 
       - name: Run tests and deploy
-        run: bash deploy.sh
+        run: bash filename of bashscript.sh
