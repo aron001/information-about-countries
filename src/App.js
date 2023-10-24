@@ -6,12 +6,11 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Home from './Component/Home';
-import ErrorPage from "./Component/Errorpage";
 import ContryDetailPage from './Component/ContryDetailPage';
 const router = createBrowserRouter(
 createRoutesFromElements(
   <Route>
-  <Route path="/" element={<Home/>}  errorElement={<ErrorPage />}>  
+  <Route path="/" element={<Home/>}  >  
 </Route>
 <Route path="/:name" element={<ContryDetailPage/>}/>
   

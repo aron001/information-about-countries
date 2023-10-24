@@ -42,13 +42,15 @@ function ContryDetailPage() {
                 <ul className="my-4 flex flex-col items-start justify-start gap-2 text-slate-700 ">
                   <li>Capital: {item.capital[0]}</li>
                   <li>Population: {item.population.toLocaleString()}</li>
+                  <li>continents: {item.continents}</li>
                   <li>Region: {item.region}</li>
                   <li>Subregion: {item.subregion}</li>
-                  <p>Languages: {Object.values(item.languages).join(', ')}</p>                  <li>continents: {item.continents}</li>
-                  <p>Currencies: {Object.values(item.currencies).join(', ')}</p>
-                  <p>Independence Status: {item.independent}</p>
-                </ul>
-  
+                  <p>Languages: {Object.values(item.languages).join(', ')}</p>                  
+                  <p>Currencies: {Object.values(item.currencies).map(currency => currency.name).join(', ')}</p>      
+                  <p>Area: {item.area} square kilometers</p>
+
+                  
+                            </ul>
                 {item.borders && (
                   <>
                     <h3 className="text-gray-900 font-bold text-lg mb-2 ">
