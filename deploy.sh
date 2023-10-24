@@ -1,28 +1,31 @@
-#!/bin/bash
+#!/usr/bin/env
 
-# Build the React app
+# checkout to the gh-pages, reset
+# and sync the branch with our main
+# change here to master if you need
+git checkout gh-pages
+git reset --hard origin/main
+
+# install dependencies and create
+# the react app build
+npm install
 npm run build
 
-# Create a new branch named "gh-pages"
-git checkout -b gh-pages
+# delete everything on the directory
+# except the build folder
+find * -maxdepth 0 -name 'build' -prune -o -exec rm -rf '{}' ';'
 
-# Remove existing files in the branch
-git rm -rf .
+# move the build folder content
+# to the repository root
+mv ./build/* .
 
-# Copy the build files to the branch
-cp -r build/* .
-
-# Stage the changes
+# deletes the git cache and push
+# the new content to gh-pages
+git rm -rf --cache .
 git add .
+git commit -m "deploy"
 
-# Commit the changes
-git commit -m "Deploy app to GitHub Pages"
-
-# Push the changes to the "gh-pages" branch
 git push origin gh-pages --force
 
-# Switch back to the main branch
+# go back to main (or master)
 git checkout main
-
-# Delete the "gh-pages" branch
-git branch -D gh-pages
